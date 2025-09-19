@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { ExternalLink, Github } from "../components/icons";
+import { ExternalLink, Github, Smartphone, Play, Monitor, Server } from "../components/icons";
 import api from "../services/api";
 
 type ProjectItem = {
@@ -12,8 +12,43 @@ type ProjectItem = {
     technologies: string[];
     frontendUrl?: string;
     backendUrl?: string;
+    mobileUrl?: string;
     liveUrl?: string;
     image?: string;
+};
+
+// Custom Tooltip Component
+const Tooltip: React.FC<{ children: React.ReactNode; content: string; position?: 'top' | 'bottom' }> = ({ 
+    children, 
+    content, 
+    position = 'top' 
+}) => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    return (
+        <div 
+            className="relative inline-block"
+            onMouseEnter={() => setIsVisible(true)}
+            onMouseLeave={() => setIsVisible(false)}
+        >
+            {children}
+            {isVisible && (
+                <div className={`
+                    absolute z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded-lg shadow-lg
+                    whitespace-nowrap max-w-xs break-all
+                    ${position === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}
+                    left-1/2 transform -translate-x-1/2
+                    before:content-[''] before:absolute before:border-4 before:border-transparent
+                    ${position === 'top' 
+                        ? 'before:top-full before:left-1/2 before:transform before:-translate-x-1/2 before:border-t-gray-900' 
+                        : 'before:bottom-full before:left-1/2 before:transform before:-translate-x-1/2 before:border-b-gray-900'
+                    }
+                `}>
+                    {content}
+                </div>
+            )}
+        </div>
+    );
 };
 
 const Projects = () => {
@@ -109,40 +144,60 @@ const Projects = () => {
                                     {/* Action buttons */}
                                     <div className="flex gap-2 pt-2">
                                         {project.liveUrl && (
-                                            <Button
-                                                size="sm"
-                                                className="flex-1 bg-gradient-primary hover:shadow-glow-primary transition-all duration-300"
-                                                asChild
-                                            >
-                                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                                                    <ExternalLink className="w-4 h-4 mr-2" />
-                                                    Live Demo
-                                                </a>
-                                            </Button>
+                                            <Tooltip content="Visit live demo" position="top">
+                                                <Button
+                                                    size="sm"
+                                                    className="flex-1 bg-gradient-primary hover:shadow-glow-primary transition-all duration-300"
+                                                    asChild
+                                                >
+                                                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                                                        <Play className="w-4 h-4 mr-2" />
+                                                        Live Demo
+                                                    </a>
+                                                </Button>
+                                            </Tooltip>
                                         )}
                                         {project.frontendUrl && (
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                className="border-border hover:bg-secondary transition-all duration-300"
-                                                asChild
-                                            >
-                                                <a href={project.frontendUrl} target="_blank" rel="noopener noreferrer">
-                                                    <Github className="w-4 h-4" />
-                                                </a>
-                                            </Button>
+                                            <Tooltip content="Frontend code" position="top">
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-border hover:bg-secondary transition-all duration-300"
+                                                    asChild
+                                                >
+                                                    <a href={project.frontendUrl} target="_blank" rel="noopener noreferrer">
+                                                        <Monitor className="w-4 h-4" />
+                                                    </a>
+                                                </Button>
+                                            </Tooltip>
                                         )}
                                         {project.backendUrl && (
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                className="border-border hover:bg-secondary transition-all duration-300"
-                                                asChild
-                                            >
-                                                <a href={project.backendUrl} target="_blank" rel="noopener noreferrer">
-                                                    <Github className="w-4 h-4" />
-                                                </a>
-                                            </Button>
+                                            <Tooltip content="Backend" position="top">
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-border hover:bg-secondary transition-all duration-300"
+                                                    asChild
+                                                >
+                                                    <a href={project.backendUrl} target="_blank" rel="noopener noreferrer">
+                                                        <Server className="w-4 h-4" />
+                                                    </a>
+                                                </Button>
+                                            </Tooltip>
+                                        )}
+                                        {project.mobileUrl && (
+                                            <Tooltip content="Mobile app" position="top">
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="border-border hover:bg-secondary transition-all duration-300"
+                                                    asChild
+                                                >
+                                                    <a href={project.mobileUrl} target="_blank" rel="noopener noreferrer">
+                                                        <Smartphone className="w-4 h-4" />
+                                                    </a>
+                                                </Button>
+                                            </Tooltip>
                                         )}
                                     </div>
                                 </CardContent>

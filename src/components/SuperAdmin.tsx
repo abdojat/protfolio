@@ -26,6 +26,7 @@ interface Project {
   technologies: string[];
   frontendUrl: string;
   backendUrl: string;
+  mobileUrl: string;
   liveUrl: string;
   image: string;
   featured: boolean;
@@ -128,6 +129,7 @@ const SuperAdmin: React.FC = () => {
     liveUrl: '',
     frontendUrl: '',
     backendUrl: '',
+    mobileUrl: '',
     image: '',
     featured: false,
     order: 0,
@@ -344,6 +346,7 @@ const SuperAdmin: React.FC = () => {
       liveUrl: '',
       frontendUrl: '',
       backendUrl: '',
+      mobileUrl: '',
       image: '',
       featured: false,
       order: 0,
@@ -361,6 +364,7 @@ const SuperAdmin: React.FC = () => {
       liveUrl: project.liveUrl || '',
       frontendUrl: project.frontendUrl || '',
       backendUrl: project.backendUrl || '',
+      mobileUrl: project.mobileUrl || '',
       image: project.image || '',
       featured: project.featured,
       order: project.order,
@@ -411,6 +415,7 @@ const SuperAdmin: React.FC = () => {
           liveUrl: projectForm.liveUrl || undefined,
           frontendUrl: projectForm.frontendUrl || undefined,
           backendUrl: projectForm.backendUrl || undefined,
+          mobileUrl: projectForm.mobileUrl || undefined,
           image: projectForm.image || undefined,
           featured: !!projectForm.featured,
           order: Number(projectForm.order) || 0,
@@ -427,6 +432,7 @@ const SuperAdmin: React.FC = () => {
           liveUrl: projectForm.liveUrl || undefined,
           frontendUrl: projectForm.frontendUrl || undefined,
           backendUrl: projectForm.backendUrl || undefined,
+          mobileUrl: projectForm.mobileUrl || undefined,
           image: projectForm.image || undefined,
           featured: !!projectForm.featured,
           order: Number(projectForm.order) || 0,
@@ -1444,6 +1450,16 @@ const SuperAdmin: React.FC = () => {
                     onChange={(e) => setProjectForm({ ...projectForm, backendUrl: e.target.value })}
                     className="border-slate-200 bg-white text-slate-800 focus:border-blue-400 focus:ring-blue-400 focus:ring-1"
                     placeholder="https://github.com/you/backend"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-700">Mobile URL</Label>
+                  <Input
+                    type="url"
+                    value={projectForm.mobileUrl}
+                    onChange={(e) => setProjectForm({ ...projectForm, mobileUrl: e.target.value })}
+                    className="border-slate-200 bg-white text-slate-800 focus:border-blue-400 focus:ring-blue-400 focus:ring-1"
+                    placeholder="https://github.com/you/mobile"
                   />
                 </div>
                 <div>

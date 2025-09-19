@@ -168,4 +168,29 @@ export const Reply: React.FC<IconProps> = ({ className = '', size = 24 }) => (
   <svg width={size} height={size} className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
   </svg>
+);
+
+export const Play: React.FC<IconProps> = ({ className = '', size = 24 }) => (
+  <svg width={size} height={size} className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <polygon points="5,3 19,12 5,21" />
+  </svg>
+);
+
+export const Monitor: React.FC<IconProps> = ({ className = '', size = 24 }) => (
+  <svg width={size} height={size} className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+    <line x1="8" y1="21" x2="16" y2="21" />
+    <line x1="12" y1="17" x2="12" y2="21" />
+  </svg>
+);
+
+export const Server: React.FC<IconProps> = ({ className = '', size = 24 }) => (
+  <svg width={size} height={size} className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <rect x="2" y="3" width="20" height="4" rx="1" />
+    <rect x="2" y="7" width="20" height="4" rx="1" />
+    <rect x="2" y="11" width="20" height="4" rx="1" />
+    <line x1="6" y1="5" x2="6.01" y2="5" />
+    <line x1="6" y1="9" x2="6.01" y2="9" />
+    <line x1="6" y1="13" x2="6.01" y2="13" />
+  </svg>
 ); 
