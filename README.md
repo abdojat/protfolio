@@ -1,70 +1,149 @@
-# Getting Started with Create React App
+# Portfolio — React Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Professional, production-ready frontend for a personal portfolio site built with React, TypeScript and Tailwind CSS. This repository contains the client application that displays hero, about, projects and contact sections and includes a protected Super Admin dashboard for managing portfolio content.
 
-## Available Scripts
+Table of contents
 
-In the project directory, you can run:
+- About
+- Features
+- Tech stack
+- Getting started
+	- Prerequisites
+	- Install
+	- Environment variables
+	- Run (development)
+	- Build (production)
+- Project structure
+- API / Backend contract
+- Super Admin (admin dashboard)
+- Deployment notes
+- Contributing
+- License
 
-### `npm start`
+About
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This client app is intended to be paired with a backend API (not included here). It loads portfolio content (hero, about, projects, contact, footer) from the API and renders a responsive, accessible single-page portfolio. It also includes an authenticated Super Admin area for managing portfolio data (reads/writes rely on server endpoints).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Features
 
-### `npm test`
+- Responsive landing page with Hero, About, Projects and Contact sections
+- Dynamic content fetched from an API (portfolio JSON)
+- Protected Super Admin dashboard (role-based access) for admin management and CRUD of portfolio entities
+- Contact form submission via API
+- Tailwind CSS design system with reusable UI components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Tech stack
 
-### `npm run build`
+- React 19 + TypeScript
+- Create React App (react-scripts)
+- Tailwind CSS
+- Axios for HTTP requests
+- React Router (client-side routing)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Getting started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js (LTS recommended)
+- npm (comes with Node) or an alternative package manager
 
-### `npm run eject`
+Install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository and change into the client folder
+2. Install dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+		npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Environment variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Create a .env file in the project root (client/) to configure runtime values used by the app. The app reads values via process.env, the important variables are:
 
-## Learn More
+- REACT_APP_API_URL — base API URL used by the client (e.g. http://localhost:5000/api)
+- REACT_APP_TITLE — site title (optional)
+- REACT_APP_DESCRIPTION — site description (optional)
+- REACT_APP_GA_TRACKING_ID — Google Analytics ID (optional)
+- REACT_APP_CONTACT_EMAIL — contact email shown in the footer (optional)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Example .env
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+		REACT_APP_API_URL=http://localhost:5000/api
+		REACT_APP_TITLE=My Portfolio
 
-### Code Splitting
+Run (development)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Start the dev server (hot reloads enabled):
 
-### Analyzing the Bundle Size
+		npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Open http://localhost:3000 in your browser.
 
-### Making a Progressive Web App
+Build (production)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Create an optimized production build into the build/ folder:
 
-### Advanced Configuration
+		npm run build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The resulting static assets are ready to be served from any static hosting service (GitHub Pages, Netlify, Vercel, a static file server, etc.).
 
-### Deployment
+Project structure (important files)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- src/
+	- components/ — UI sections (Hero, About, Projects, Footer, SuperAdmin, etc.)
+	- components/ui — small reusable primitives (button, input, card, etc.)
+	- contexts/AuthContext.tsx — authentication provider used by protected routes
+	- config/index.ts — runtime configuration wrapper (reads process.env)
+	- services/api.ts — axios instance + API helper functions and TypeScript interfaces
+	- hooks/ — custom hooks (toast, etc.)
 
-### `npm run build` fails to minify
+Key config files
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- package.json — scripts and dependencies
+- tailwind.config.js — Tailwind configuration
+- tsconfig.json — TypeScript configuration
+
+API / Backend contract
+
+This client expects a JSON API exposing portfolio data and authentication endpoints. Important endpoints used by the client include:
+
+- GET /portfolio — returns site content (hero, about, projects, contact, footer)
+- POST /contact — submit contact form
+- POST /auth/login — admin login (returns token and admin data)
+- GET /auth/me — get current authenticated admin
+- GET /auth/admins — list admin users (super-admin only)
+- POST /auth/admins — create admin user (super-admin only)
+
+See src/services/api.ts and src/config/index.ts for request baseURL and axios configuration.
+
+Super Admin (admin dashboard)
+
+There is a built-in Super Admin dashboard (protected) implemented under the components directory. Notes:
+
+- The Super Admin UI assumes server-side JWT authentication and role-based authorization. The UI stores a token in localStorage (the key used is `token`).
+- To enable the super admin features during development, ensure the backend provides the authentication endpoints listed above and seed a user with the `super-admin` role.
+- More implementation and troubleshooting notes are available in SUPERADMIN_README.md (included in this repo).
+
+Deployment notes
+
+- The app compiles into the build/ folder when you run `npm run build`. Deploy the contents of that folder to your chosen static hosting provider.
+- If your API is hosted on a different domain, ensure the backend enables CORS for your client origin.
+
+Production checklist before pushing to GitHub
+
+- Add a LICENSE file (recommended: MIT) if you want an open-source license.
+- Add a meaningful homepage URL in package.json if you plan to use GitHub Pages.
+- Remove any hard-coded secrets — use environment variables for API URLs and keys.
+
+Contributing
+
+Contributions are welcome. A simple recommended workflow:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make changes and add tests where appropriate
+4. Open a pull request describing your changes
+
+For help with backend integration or CI/CD, please open an issue in this repository so the community can assist.
+
+License
+
+This project does not include a LICENSE file by default.
